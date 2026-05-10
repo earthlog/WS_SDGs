@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 우신고등학교 3학년 자율활동</title>
+    <!-- Fonts: Unified to Noto Serif KR -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- html2pdf.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --surface: #ffffff;
+            --ink: #1e1e1c;
+            --accent: #3a5a40; /* Soft Forest Green */
+            --border: #d1d5db;
+            --sub-text: #4b5563;
+            --highlight: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
+            color: var(--ink);
+            font-family: 'Noto Serif KR', serif;
+            line-height: 1.8;
+            word-break: keep-all;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        /* Hero Section - Compact Height */
+        .hero {
+            background: linear-gradient(135deg, #1e1e1c 0%, #3a5a40 100%);
+            color: #fff;
+            padding: 2.2rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 2.1rem;
+        }
+
+        .hero p {
+            margin: 0.4rem 0 0;
+            opacity: 0.9;
+            font-weight: 300;
+            font-size: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Nav Bar */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-tabs {
+            display: flex;
+            max-width: 1024px;
+            width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-item {
+            flex: 1;
+            min-width: 100px;
+            padding: 1rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--sub-text);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-item.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 0 1.5rem 6rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #eee;
+        }
+
+        /* Step: Goals Image Style */
+        .goals-image-container {
+            text-align: center;
+            margin: 1.5rem 0;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        
+        .goals-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* Guide Styles */
+        .guide-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .guide-step {
+            margin-bottom: 2rem;
+        }
+
+        .guide-step:last-child { margin-bottom: 0; }
+
+        .guide-step h4 {
+            color: var(--accent);
+            font-size: 1.25rem;
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .guide-step p {
+            color: var(--sub-text);
+            padding-left: 0;
+            margin: 0;
+            font-size: 1.05rem;
+        }
+
+        /* SDG Grid */
+        .sdg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sdg-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sdg-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+        }
+
+        .sdg-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sdg-num {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: 700;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .sdg-detail-box {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border);
+            font-size: 0.95rem;
+        }
+
+        .guide-item {
+            margin-top: 8px;
+            padding: 10px 14px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            color: var(--accent);
+            font-weight: 600;
+            border-left: 4px solid var(--accent);
+        }
+
+        .guide-label {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #1a1a1a;
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            display: block;
+        }
+
+        /* Form Elements */
+        .form-group { margin-bottom: 2rem; }
+        label { display: block; font-weight: 700; margin-bottom: 0.6rem; font-size: 1.1rem; }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: #fff;
+        }
+
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .image-upload {
+            border: 2px dashed var(--border);
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            color: var(--sub-text);
+        }
+
+        /* Report Preview */
+        #report-preview {
+            padding: 4rem;
+            background: white;
+            color: #1a1a1a;
+            min-height: 297mm;
+        }
+
+        .rep-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .rep-title {
+            font-size: 2.1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 1rem;
+        }
+
+        .rep-user {
+            text-align: right;
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .rep-section {
+            margin-bottom: 2.5rem;
+            page-break-inside: avoid;
+        }
+
+        .rep-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        .rep-label::before {
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 22px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .rep-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            white-space: pre-wrap;
+            color: #333;
+        }
+
+        .rep-meta {
+            margin-bottom: 1.5rem;
+            line-height: 2;
+        }
+
+        .rep-img {
+            max-width: 100%;
+            max-height: 380px;
+            margin: 2rem auto;
+            display: block;
+            border: 1px solid #eee;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--ink);
+            color: white;
+            padding: 0.9rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-accent { background: var(--accent); }
+
+        @media (max-width: 768px) {
+            #report-preview { padding: 2rem; }
+            .user-info-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 1.6rem; }
+        }
+
+        @media print {
+            nav, .hero, .btn { display: none !important; }
+            #report-preview { padding: 0; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="badge">우신고등학교</div>
+        <h1>2026 우신고등학교 3학년 자율활동</h1>
+        <p>SDGs 자율 탐구 활동: 지속가능한 미래를 위한 선택</p>
+    </header>
+
+    <nav>
+        <div class="nav-tabs">
+            <div class="tab-item active" onclick="showSection(1)">활동 안내</div>
+            <div class="tab-item" onclick="showSection(2)">학습 목표</div>
+            <div class="tab-item" onclick="showSection(3)">SDGs 알아보기</div>
+            <div class="tab-item" onclick="showSection(4)">자율 탐구</div>
+            <div class="tab-item" onclick="showSection(5)">보고서 확인/저장</div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Step 1: 활동 안내 -->
+        <section id="step1" class="section active">
+            <div class="card">
+                <h2 style="margin-top:0; margin-bottom:2rem; text-align:center;">SDGs 자율 탐구 활동 가이드</h2>
+                <div class="guide-box">
+                    <div class="guide-step">
+                        <h4>1. 목표 탐색 및 주제 선정</h4>
+                        <p><strong>'SDGs 알아보기'</strong> 탭에서 17가지 목표 내용을 살펴보고 관심 있는 목표를 하나 선택하세요. 각 목표 카드 아래에 제시된 심층 탐구 주제를 참고하여 나만의 주제를 정합니다.</p>
+                    </div>
+                    <div class="guide-step">
+                        <h4>2. 심층 탐구 보고서 작성</h4>
+                        <p><strong>'자율 탐구'</strong> 탭에서 인적 사항을 입력하고 탐구를 진행합니다. 유형은 <strong>국내외 이슈 분석</strong> 또는 <strong>우리가 살고 있는 구로구 중심의 지역 사회 분석</strong> 중 하나를 선택하세요.</p>
+                    </div>
+                    <div class="guide-step">
+                        <h4>3. 참고 사이트 안내</h4>
+                        <ul style="padding-left:1.5rem; color:var(--sub-text); margin-top:10px; font-size:1rem;">
+                            <li style="margin-bottom:12px;"><strong>국가 지속가능발전포털:</strong> <a href="https://www.ncsd.go.kr/ksdgs/goals" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none;">ncsd.go.kr (통계 및 글로벌 현황)</a></li>
+                            <li style="margin-bottom:12px;"><strong>구로구청 지속가능발전:</strong> <a href="http://guro.go.kr/www/contents.do?key=4379" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none;">guro.go.kr (우리 지역 실태 및 정책)</a></li>
+                            <li><strong>구로구 지속가능발전 기본전략:</strong> <a href="https://www.guro.go.kr/www/contents.do?key=4202&" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none;">guro.go.kr (기본전략 및 추진계획 PDF)</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <button class="btn btn-accent" onclick="showSection(2)">학습 목표 확인하기 &rarr;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: 학습 목표 -->
+        <section id="step2" class="section">
+            <div class="card">
+                <h2 style="margin-top:0; text-align:center; margin-bottom:1.5rem;">지속가능발전목표(K-SDGs) 체계</h2>
+                <div class="goals-image-container">
+                    <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MDNfNDkg%2FMDAxNjI1MjkwMTIwMTE3.F1WwWDrd5eCjYS2r8vZLa6kMt68aVppAktHxudksiccg.U8xghTcoCjzGKVCdStg94swhLlxNFwDeD6kKziANvpsg.PNG.sooob27%2Fimage.png&type=sc960_832" alt="K-SDGs 상세 체계도">
+                </div>
+                <div class="goals-box" style="margin-top:2rem;">
+                    <h3 style="margin-bottom:1.2rem;">활동 목표</h3>
+                    <ul style="padding-left: 1.2rem; margin: 0; line-height: 2; font-size: 1.05rem;">
+                        <li>SDGs의 17가지 목표가 인류 공통의 문제를 해결하기 위해 어떤 체계를 갖추고 있는지 이해한다.</li>
+                        <li>국내외 및 우리 지역 사회의 현안을 SDGs 지표와 연결하여 비판적으로 분석한다.</li>
+                        <li>주도적인 탐구 과정을 거쳐 구체적인 실천 방안을 제안하고 글로벌 시민 역량을 강화한다.</li>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin-top: 2.5rem;">
+                    <button class="btn btn-accent" onclick="showSection(3)">SDGs 목표 살펴보기 &rarr;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: SDGs 알아보기 -->
+        <section id="step3" class="section">
+            <div class="card">
+                <h2 style="margin-top: 0;">17가지 지속가능발전목표 (SDGs)</h2>
+                <p style="color: var(--sub-text); margin-bottom: 2.5rem;">카드를 클릭하면 각 목표의 상세 정의와 심층 탐구를 위한 탐구 가이드들을 확인할 수 있습니다.</p>
+                <div class="sdg-grid" id="sdgGrid"></div>
+            </div>
+        </section>
+
+        <!-- Step 4: 자율 탐구 -->
+        <section id="step4" class="section">
+            <div class="card">
+                <h2 style="margin-top: 0;">자율 탐구</h2>
+                
+                <div class="user-info-grid">
+                    <div class="form-group" style="margin:0;">
+                        <label>학년</label>
+                        <input type="number" id="user_grade" value="3" class="save-local">
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label>학반</label>
+                        <input type="number" id="user_class" placeholder="반" class="save-local">
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label>번호</label>
+                        <input type="number" id="user_number" placeholder="번" class="save-local">
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label>성명</label>
+                        <input type="text" id="user_name" placeholder="이름" class="save-local">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>탐구 핵심 목표 선택</label>
+                    <select id="selected_sdg" class="save-local">
+                        <option value="">17개 목표 중 하나를 선택하세요</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>탐구 유형</label>
+                    <select id="exploration_type" class="save-local">
+                        <option value="">탐구 성격을 선택하세요</option>
+                        <option value="국내 사회적 이슈 분석">국내 사회적 이슈 분석</option>
+                        <option value="국외 사회적 이슈 분석">국외 사회적 이슈 분석</option>
+                        <option value="지역 사회 현황 분석 (구로구 중심)">지역 사회 현황 분석 (구로구 중심)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="report_title">탐구 주제명</label>
+                    <input type="text" id="report_title" placeholder="탐구 내용을 함축하는 제목을 정해주세요." class="save-local">
+                </div>
+
+                <div class="form-group">
+                    <label>1. 탐구 동기</label>
+                    <textarea id="motive" rows="6" class="save-local" placeholder="이 주제에 관심을 갖게 된 배경과 해결하고 싶었던 궁금증을 적어주세요."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>2. 탐구 내용</label>
+                    <textarea id="solution" rows="12" class="save-local" placeholder="조사한 구체적인 데이터, 정책 분석, 우리 동네 관찰 지표 등을 바탕으로 심층적인 내용을 기술하세요."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>3. 결론 및 성찰</label>
+                    <textarea id="reflection" rows="5" class="save-local" placeholder="활동을 통해 배우고 느낀 점, 그리고 향후 실천하고 싶은 계획을 정리하세요."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>활동 이미지 (자료 캡처, 현장 사진 등)</label>
+                    <div class="image-upload" onclick="document.getElementById('img_input').click()">
+                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="margin-bottom:10px;"><path d="M12 4v16m8-8H4"></path></svg>
+                        <div>클릭하여 이미지 파일 업로드</div>
+                        <input type="file" id="img_input" hidden accept="image/*" onchange="handleImg(this)">
+                    </div>
+                    <div id="img_preview_container" style="display:none; margin-top:15px; position:relative;">
+                        <img id="img_preview" style="max-width:200px; border-radius:8px;">
+                        <button onclick="removeImg()" style="position:absolute; top:5px; left:160px; background:rgba(0,0,0,0.5); color:white; border:none; border-radius:50%; width:24px; height:24px; cursor:pointer;">&times;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5: 보고서 확인/저장 -->
+        <section id="step5" class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="margin:0;">보고서 확인 및 저장</h2>
+                <button class="btn btn-accent" onclick="exportPDF()">PDF 파일로 저장하기</button>
+            </div>
+            
+            <div id="report-preview">
+                <div class="rep-header">
+                    <div class="rep-title">SDGs 자율 탐구 결과 보고서</div>
+                    <div class="rep-user">
+                        3학년 <span id="p-class"></span>반 <span id="p-number"></span>번 성명: <span id="p-name" style="font-weight:700;"></span>
+                    </div>
+                </div>
+
+                <div class="rep-section">
+                    <div class="rep-label">탐구 목표 및 주제</div>
+                    <div class="rep-meta">
+                        • 핵심 목표: <span id="p-sdg" style="font-weight:600;"></span><br>
+                        • 탐구 유형: <span id="p-type" style="font-weight:600;"></span><br>
+                        • 주 제 명: <span id="p-title" style="font-weight:600;"></span>
+                    </div>
+                </div>
+
+                <div class="rep-section">
+                    <div class="rep-label">1. 탐구 동기</div>
+                    <div class="rep-text" id="p-motive"></div>
+                </div>
+
+                <div class="rep-section">
+                    <div class="rep-label">2. 탐구 내용</div>
+                    <div class="rep-text" id="p-solution"></div>
+                </div>
+
+                <div class="rep-section">
+                    <div class="rep-label">3. 결론 및 성찰</div>
+                    <div class="rep-text" id="p-reflection"></div>
+                </div>
+
+                <div id="p-img-box" class="rep-section" style="display: none; border-top: 1px solid #eee; padding-top: 2rem; margin-top: 3rem;">
+                    <div class="rep-label">관련 자료</div>
+                    <img id="p-img" class="rep-img" src="">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const sdgData = [
+            { id: 1, title: "빈곤 퇴치", color: "#E5243B", desc: "모든 곳에서 모든 형태의 빈곤 종결", guides: ["구로구 복지 사각지대 발굴 정책의 실효성 분석", "디지털 빈곤(정보 격차)이 노인 빈곤에 미치는 영향 탐구", "국가별 최저생계비 기준과 빈곤선 정의 비교 분석", "코로나19 이후 고용 불안정성과 빈곤층 확대 양상 조사"] },
+            { id: 2, title: "기아 종식", color: "#DDA63A", desc: "식량 안보 달성 및 지속가능한 농업 진흥", guides: ["우리 지역 푸드뱅크 네트워크의 운영 현황 및 개선 제안", "기후 위기가 국내 식량 자급률에 미치는 영향 분석", "스마트 팜 기술을 활용한 도심형 수직 농장의 경제성 검토", "학교 급식 잔반 줄이기 캠페인의 데이터 기반 효과 분석"] },
+            { id: 3, title: "건강과 웰빙", color: "#4C9F38", desc: "모든 연령층의 건강한 삶 보장", guides: ["청소년기 SNS 이용 시간이 우울감에 미치는 상관관계 연구", "구로구 공공 의료 시설의 접근성 평준화 지표 조사", "포스트 코로나 시대 공공 보건 체계의 변화와 발전 방향", "생활 체육 시설 확충이 지역 주민 건강 지표에 미치는 영향"] },
+            { id: 4, title: "양질의 교육", color: "#C5192D", desc: "모두를 위한 포용적 양질의 교육 보장", guides: ["에듀테크 활용 교육의 학습 격차 해소 가능성 탐구", "우신고 학생들을 위한 지속가능발전 교육(ESD) 모듈 제안", "지역별 사교육 의존도 차이에 따른 교육 불평등 실태 조사", "미래 사회 대비 핵심 역량 함양을 위한 고교 교육과정 분석"] },
+            { id: 5, title: "성평등", color: "#FF3A21", desc: "성평등 달성 및 여성과 여아 권익 신장", guides: ["미디어 콘텐츠 속 성 고정관념 사례 분석 및 비판", "국내 주요 기업의 유리천장 지수와 성별 임금 격차 분석", "디지털 성범죄 예방을 위한 법적·기술적 보완책 탐구", "돌봄 노동의 사회적 가치 재평가와 제도적 지원 방안"] },
+            { id: 6, title: "깨끗한 물과 위생", color: "#26BDE2", desc: "물과 위생의 지속가능한 관리 보장", guides: ["안양천 유역 오염원 조사 및 수질 개선 정책 모니터링", "기후 변화에 따른 국내 가뭄 실태와 수자원 확보 전략", "가정 내 미세플라스틱 배출 저감을 위한 필터 기술 탐구", "전 세계 물 부족 국가의 식수 정화 기술 도입 사례 비교"] },
+            { id: 7, title: "적정 가격의 깨끗한 에너지", color: "#FCC30B", desc: "신뢰할 수 있는 현대적 에너지 제공", guides: ["지역 사회 태양광 미니발전소 보급 현황 및 경제성 분석", "수소 에너지가 미래 교통 체계에 미칠 영향과 한계점 연구", "에너지 효율 등급제가 소비 행태 변화에 미치는 효과 분석", "RE100 캠페인이 국내 산업 경쟁력에 미치는 영향 탐구"] },
+            { id: 8, title: "양질의 일자리와 경제성장", color: "#A21942", desc: "지속가능한 경제성장 및 완전 고용 보장", guides: ["인공지능(AI) 자동화가 특정 직업군 고용에 미치는 영향 분석", "구로디지털단지 IT 산업의 변화와 지역 경제 파급 효과 조사", "배달 플랫폼 노동자의 권익 보호를 위한 법적 지위 탐구", "지속가능한 성장을 위한 사회적 기업의 비즈니스 모델 분석"] },
+            { id: 9, title: "산업, 혁신, 사회기반 시설", color: "#FD6925", desc: "회복력 있는 인프라 구축 및 혁신 촉진", guides: ["스마트 시티 구축을 위한 IoT 기반 공공 인프라 사례 분석", "국내 제조업의 디지털 전환(DX) 성공 및 실패 요인 연구", "노후 주거지 재생 사업에서 유니버설 디자인의 적용 실태", "자율주행 인프라 구축을 위한 도로 교통 법규 개선안 제안"] },
+            { id: 10, title: "불평등 감소", color: "#DD1367", desc: "국가 내 및 국가 간 불평등 완화", guides: ["디지털 금융 확산에 따른 고령층의 금융 소외 실태 조사", "구로구 다문화 가정 자녀의 학교 적응 및 지원 정책 분석", "기본소득 도입에 대한 찬반 논리 비교 및 경제적 영향 탐구", "사회적 이동성(계층 사다리) 강화을 위한 교육 복지 모델 연구"] },
+            { id: 11, title: "지속가능한 도시와 지역사회", color: "#FD9D24", desc: "안전하고 회복력 있는 도시 조성", guides: ["구로구 도시 재생 지역의 주민 만족도 및 공동체 활성화 조사", "기후 재난 대비 도심 배수 시스템의 용량 적정성 분석", "CPTED(범죄예방환경설계) 도입 후 지역 범죄율 변화 분석", "지속가능한 도시를 위한 15분 도시(근거리 생활권) 사례 연구"] },
+            { id: 12, title: "책임 있는 소비와 생산", color: "#BF8B2E", desc: "지속가능한 소비 및 생산 형태 보장", guides: ["패스트 패션 산업의 환경 영향과 슬로우 패션 소비 행태 분석", "제로 웨이스트(Zero Waste) 매장 이용자의 실천 의지 상관관계", "기업의 과대 포장 방지를 위한 환경부 규제의 실효성 탐구", "순환 경제 모델로서의 중고 거래 플랫폼 경제적 효과 분석"] },
+            { id: 13, title: "기후행동", color: "#3F7E44", desc: "기후변화 방지를 위한 긴급 조치", guides: ["개인별 탄소 배출량 추적 앱의 실생활 실천 유도 효과 분석", "기후 위기 대응을 위한 탄소 국경 조정 제도(CBAM) 영향 분석", "해외 기후 소송 사례를 통한 환경권과 헌법적 가치 탐구", "도심 열섬 현상 완화를 위한 옥상 녹화 사업의 온도 저감 효과"] },
+            { id: 14, title: "수생태계 보전", color: "#0A97D9", desc: "해양 자원 보존 및 지속가능한 이용", guides: ["해양 미세플라스틱 유입 경로 차단을 위한 기술적 대안 탐구", "기후 변화에 따른 한반도 주변 해역 어종 변화 실태 조사", "해양 생태계 보호구역 지정이 인근 지역 경제에 미치는 영향", "블루카본(해양 생태계 탄소 흡수원)의 가치와 보존 방안 연구"] },
+            { id: 15, title: "육상생태계 보전", color: "#56C02B", desc: "육상 생태계 보호 및 복구 증진", guides: ["도심 속 비오톱(생물서식공간) 설치의 생물 다양성 회복 효과", "외래종 침입이 우리 지역 고유 생태계에 미치는 파괴적 영향", "산림 파괴가 국지적 기상 변화 및 탄소 흡수량에 미치는 분석", "야생 동물 로드킬 예방을 위한 생태 통로 위치 적정성 평가"] },
+            { id: 16, title: "평화, 정의, 강력한 제도", color: "#00689D", desc: "포용적인 제도 구축 및 정의 구현", guides: ["인공지능 알고리즘의 편향성이 의사결정 정의에 미치는 영향", "공공 데이터 개방이 행정 투명성 및 시민 참여도에 미치는 효과", "사이버 범죄(딥페이크 등) 대응을 위한 형사 제도적 한계 탐구", "분쟁 지역 지원을 위한 글로벌 거버넌스의 역할과 협력 사례"] },
+            { id: 17, title: "목표 달성을 위한 파트너십", color: "#19486A", desc: "글로벌 파트너십 활성화", guides: ["SDGs 달성을 위한 지자체-시민단체-기업의 협력 모델 분석", "개발도상국 기술 지원(ODA) 사업의 지속가능성 평가 사례 연구", "글로벌 환경 협약 준수를 위한 국내 기업의 ESG 경영 지표 분석", "청소년 세계시민 의식 함양을 위한 국제 교류 프로그램 효과 분석"] }
+        ];
+
+        const grid = document.getElementById('sdgGrid');
+        const select = document.getElementById('selected_sdg');
+
+        sdgData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'sdg-card';
+            card.innerHTML = `
+                <div class="sdg-header">
+                    <div class="sdg-num" style="background:${item.color}">${item.id}</div>
+                    <div style="font-weight:700;">${item.title}</div>
+                </div>
+                <div class="sdg-detail-box" id="sdg-${item.id}">
+                    <div style="margin-bottom:12px; color:#333; font-weight:500;">${item.desc}</div>
+                    <span class="guide-label">탐구 가이드</span>
+                    ${item.guides.map(g => `<div class="guide-item">${g}</div>`).join('')}
+                </div>
+            `;
+            card.onclick = () => {
+                const isOp = document.getElementById(`sdg-${item.id}`).style.display === 'block';
+                document.querySelectorAll('.sdg-detail-box').forEach(d => d.style.display = 'none');
+                document.getElementById(`sdg-${item.id}`).style.display = isOp ? 'none' : 'block';
+            };
+            grid.appendChild(card);
+
+            const opt = document.createElement('option');
+            opt.value = `목표 ${item.id}. ${item.title}`;
+            opt.innerText = `목표 ${item.id}. ${item.title}`;
+            select.appendChild(opt);
+        });
+
+        function showSection(n) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step${n}`).classList.add('active');
+            document.querySelectorAll('.tab-item').forEach((t, i) => t.classList.toggle('active', i === n-1));
+            if(n === 5) updatePreview();
+            window.scrollTo(0,0);
+        }
+
+        let currentImg = null;
+        function handleImg(input) {
+            if(input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    currentImg = e.target.result;
+                    document.getElementById('img_preview').src = currentImg;
+                    document.getElementById('img_preview_container').style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function removeImg() {
+            currentImg = null;
+            document.getElementById('img_input').value = "";
+            document.getElementById('img_preview_container').style.display = 'none';
+        }
+
+        const fields = document.querySelectorAll('.save-local');
+        fields.forEach(f => {
+            f.value = localStorage.getItem('wooshin_sdg_' + f.id) || f.value;
+            f.addEventListener('input', () => localStorage.setItem('wooshin_sdg_' + f.id, f.value));
+        });
+
+        function updatePreview() {
+            const map = {
+                'p-class': 'user_class', 'p-number': 'user_number', 'p-name': 'user_name',
+                'p-sdg': 'selected_sdg', 'p-type': 'exploration_type', 'p-title': 'report_title',
+                'p-motive': 'motive', 'p-solution': 'solution', 'p-reflection': 'reflection'
+            };
+            for(let key in map) {
+                document.getElementById(key).innerText = document.getElementById(map[key]).value || '(내용 없음)';
+            }
+            if(currentImg) {
+                document.getElementById('p-img').src = currentImg;
+                document.getElementById('p-img-box').style.display = 'block';
+            } else {
+                document.getElementById('p-img-box').style.display = 'none';
+            }
+        }
+
+        function exportPDF() {
+            const element = document.getElementById('report-preview');
+            
+            const grade = document.getElementById('user_grade').value || '0';
+            const cls = (document.getElementById('user_class').value || '0').padStart(2, '0');
+            const num = (document.getElementById('user_number').value || '0').padStart(2, '0');
+            const name = document.getElementById('user_name').value || '우신고학생';
+            
+            const studentId = `${grade}${cls}${num}`;
+
+            const opt = {
+                margin: 15,
+                filename: `SDGs_자율탐구_보고서_${studentId}_${name}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
