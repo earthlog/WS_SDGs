@@ -39,11 +39,11 @@
             letter-spacing: -0.5px;
         }
 
-        /* Hero Section - Compact Height */
+        /* Hero Section - Compact & No Badge */
         .hero {
             background: linear-gradient(135deg, #1e1e1c 0%, #3a5a40 100%);
             color: #fff;
-            padding: 2.2rem 1rem;
+            padding: 2.5rem 1rem;
             text-align: center;
         }
 
@@ -53,22 +53,10 @@
         }
 
         .hero p {
-            margin: 0.4rem 0 0;
+            margin: 0.5rem 0 0;
             opacity: 0.9;
             font-weight: 300;
             font-size: 1rem;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(4px);
-            color: white;
-            padding: 4px 14px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         /* Nav Bar */
@@ -115,7 +103,7 @@
         .container {
             max-width: 960px;
             margin: 2rem auto;
-            padding: 0 1.5rem 6rem;
+            padding: 0 1.5rem 4rem;
         }
 
         .section {
@@ -141,7 +129,7 @@
             border: 1px solid #eee;
         }
 
-        /* Step: Goals Image Style */
+        /* Goals Image Style */
         .goals-image-container {
             text-align: center;
             margin: 1.5rem 0;
@@ -360,6 +348,17 @@
             border: 1px solid #eee;
         }
 
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--sub-text);
+            font-size: 0.9rem;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 2rem;
+            background: #fff;
+        }
+
         /* Buttons */
         .btn {
             background: var(--ink);
@@ -386,7 +385,7 @@
         }
 
         @media print {
-            nav, .hero, .btn { display: none !important; }
+            nav, .hero, .btn, footer { display: none !important; }
             #report-preview { padding: 0; border: none; }
         }
     </style>
@@ -394,7 +393,6 @@
 <body>
 
     <header class="hero">
-        <div class="badge">우신고등학교</div>
         <h1>2026 우신고등학교 3학년 자율활동</h1>
         <p>SDGs 자율 탐구 활동: 지속가능한 미래를 위한 선택</p>
     </header>
@@ -590,6 +588,10 @@
             </div>
         </section>
     </main>
+
+    <footer>
+        © 우신고등학교 교사 이상준. All rights reserved.
+    </footer>
 
     <script>
         const sdgData = [
